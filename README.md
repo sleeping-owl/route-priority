@@ -22,7 +22,7 @@ That's it. You now have some enhanced functionality available to your routes.
 Now you can change your routes priority:
 
 ```php
-Route::get('my-route', ['uses' => 'MyController@myAction', 'as' => 'my-route'])->setPriority(100);
+Route::get('my-route', ['uses' => 'MyController@myAction'])->setPriority(100);
 ```
 
 `Priority` is integer value.
