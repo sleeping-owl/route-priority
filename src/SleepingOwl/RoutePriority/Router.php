@@ -41,6 +41,33 @@ class Router extends IlluminateRouter
 		return $route;
 	}
 
+	/**
+	 * Create a new route instance.
+	 *
+	 * @param  array|string  $methods
+	 * @param  string  $uri
+	 * @param  mixed   $action
+	 * @return \Illuminate\Routing\Route
+	 */
+	protected function createRoute($methods, $uri, $action)
+	{
+		$route = parent::createRoute($methods, $uri, $action);
+		if ( ! empty($this->groupStack))
+		{
+			$this->mergePriority($route);
+		}
+		return $route;
+	}
+
+	protected function mergePriority($route)
+	{
+		$row = last($this->groupStack);
+		if (isset($row['priority']))
+		{
+			$route->setPriority($row['priority']);
+		}
+	}
+
 	public function dispatch(Request $request)
 	{
 		$this->getRoutes();
